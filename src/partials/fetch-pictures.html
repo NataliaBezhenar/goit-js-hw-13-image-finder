@@ -1,29 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PictureChooser</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <title>PictureChooser</title>
+  </head>
+  <body>
+    <form class="search-form" id="search-form">
+      <input type="text" name="query" autocomplete="off" placeholder="Search images..." />
+      <button class="btn search-button" type="submit">Search</button>
+    </form>
 
-  <form class="search-form" id="search-form">
-    <input
-      type="text"
-      name="query"
-      autocomplete="off"
-      placeholder="Search images..."
-    />
-  </form>
+    <ul class="gallery"></ul>
 
-  <ul class="gallery">
-    <!-- Список <li> с карточками изображений -->
-  </ul>
+    <button class="btn custom-btn load-more is-hidden" id="loadMore">get more results</button>
 
-
-
-
-  <script src="../src/js/renderPictures.js"></script>
-</body>
+    <script src="../src/js/renderPictures.js"></script>
+  </body>
 </html>
