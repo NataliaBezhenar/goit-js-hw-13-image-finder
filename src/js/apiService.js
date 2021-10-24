@@ -11,7 +11,6 @@ function fetchPictures(searchQuery, page) {
       }
       throw new Error('Not 2xx response');
     })
-    .catch(renderError('No results were found. Try to change your query'));
 }
 
 export default { fetchPictures };
