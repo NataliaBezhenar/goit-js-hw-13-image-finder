@@ -1,36 +1,31 @@
 import fetchApi from './apiService';
-import getRefs from './refs'
-import cardTmpl from '../templates/pictureCards.hbs'
+import getRefs from './refs';
+import cardTmpl from '../templates/pictureCards.hbs';
 
-const debounce = require('lodash.debounce');
 const refs = getRefs();
 
+refs.form.addEventListener('submit', onSearchSubmit);
 
-
-
-
-const onInputValue = debounce(() => {
+function onSearchSubmit(e) {
+  e.preventDefault();
+  refs.gallery.innerHTML = '';
   if (refs.inputQuery.value.length === 0) {
     return;
   }
-  fetchApi.fetchPictures(refs.inputQuery.value)
-  //.then(res => console.log(res))
-  .then(renderCards)
-  .catch(error => console.log("Error: +++++++++++++", error));
+  fetchApi
+    .fetchPictures(refs.inputQuery.value)
+    .then(renderCards)
+    .catch(error => console.log('Error: +++++++++++++', error));
 
-}, 2000);
-
-
-refs.inputQuery.addEventListener('input', onInputValue);
+  refs.loadMoreBtn.classList.remove('is-hidden');
+}
 
 function renderCards(res) {
   if (res.status === 404) {
     onFetchError();
-  } 
-  console.log(cardTmpl(res))
-  refs.gallery.innerHTML = cardTmpl(res)
+  }
+  refs.gallery.innerHTML = cardTmpl(res);
 }
-
 
 function onFetchError() {
   renderError('Something went wrong, try again!');
