@@ -15,13 +15,12 @@ function onSearchSubmit(e) {
   }
   fetchApi
     .fetchPictures(refs.inputQuery.value, page)
-    .then(renderCards)
-    .catch(renderError('Cannot implement you query'));
+    .then(renderCards);
 }
 
 function renderCards(res) {
   if (res.status === 404) {
-    onFetchError();
+    renderError('Error 404 occured. Cannot implement query');
   } else if (res.total === 0) {
     renderError('No results were found. Try to change your query');
     return;
