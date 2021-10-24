@@ -23,6 +23,7 @@ function renderCards(res) {
     renderError('Error 404 occured. Cannot implement query');
   } else if (res.total === 0) {
     renderError('No results were found. Try to change your query');
+    refs.loadMoreBtn.classList.add('is-hidden');
     return;
   }
   refs.gallery.innerHTML = cardTmpl(res);
@@ -41,7 +42,7 @@ function onLoadMoreClick() {
     .then(data => {
       refs.gallery.insertAdjacentHTML('beforeend', data);
     })
-    .catch(renderError('Error occured. Something went wrong'));
+    .catch(e => renderError('Error occured. Something went wrong. Error: ', e));
   easyScroll();
   page++;
 }
