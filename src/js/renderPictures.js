@@ -54,5 +54,12 @@ function onLoadMoreClick() {
       refs.gallery.insertAdjacentHTML('beforeend', data);
     })
     .catch(error => console.log('Error: +++++++++++++', error));
+  easyScroll();
   page++;
+}
+
+function easyScroll() {
+  setTimeout(() => {
+    refs.loadMoreBtn.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }, 500);
 }
