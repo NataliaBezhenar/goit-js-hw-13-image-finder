@@ -1,6 +1,7 @@
 import fetchApi from './apiService';
 import getRefs from './refs';
 import cardTmpl from '../templates/pictureCards.hbs';
+import { renderError } from './notifications';
 
 const refs = getRefs();
 let page = 1;
@@ -15,33 +16,21 @@ function onSearchSubmit(e) {
   fetchApi
     .fetchPictures(refs.inputQuery.value, page)
     .then(renderCards)
-    .catch(error => console.log('Error: +++++++++++++', error));
+    .catch(renderError('Cannot implement you query'));
 }
 
 function renderCards(res) {
   if (res.status === 404) {
     onFetchError();
   } else if (res.total === 0) {
-    console.log('No pictures on your query');
-    throw new Error('Not 2xx response');
+    renderError('No results were found. Try to change your query');
+    return;
   }
   refs.gallery.innerHTML = cardTmpl(res);
   page++;
   if (res.total > 12) {
     refs.loadMoreBtn.classList.remove('is-hidden');
   }
-}
-
-function onFetchError() {
-  renderError('Something went wrong, try again!');
-}
-
-function renderError(errText) {
-  refs.gallery.innerHTML = '';
-  return error({
-    text: errText,
-    modules: new Map([...defaultModules, [PNotifyDesktop, {}]]),
-  });
 }
 
 refs.loadMoreBtn.addEventListener('click', onLoadMoreClick);
@@ -53,7 +42,7 @@ function onLoadMoreClick() {
     .then(data => {
       refs.gallery.insertAdjacentHTML('beforeend', data);
     })
-    .catch(error => console.log('Error: +++++++++++++', error));
+    .catch(renderError('Error occured. Something went wrong'));
   easyScroll();
   page++;
 }
