@@ -10,6 +10,7 @@ refs.form.addEventListener('submit', onSearchSubmit);
 function onSearchSubmit(e) {
   e.preventDefault();
   refs.gallery.innerHTML = '';
+  page = 1;
   if (refs.inputQuery.value.length === 0) {
     return;
   }
